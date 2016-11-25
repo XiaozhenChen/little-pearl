@@ -41,7 +41,7 @@ void display(void)
 														glColor4f(0.0f, 1.0f, 0.0f, 0.5);
 														glVertex3f(0.0f, 0.0f, -1);
 														glVertex3f(1.0f, 0.0f, -1);
-														glVertex3f(1.0f, 1.0f, -1);
+/														glVertex3f(1.0f, 1.0f, -1);
 														glVertex3f(0.0f, 1.0f, -1);
 														//left
 														glColor4f(0.0f, 0.0f, 1.0f, 0.5);
@@ -81,7 +81,7 @@ void display(void)
 //没有输入Enter 
 
 
-		if(!enter)    
+		if(!enter)    /
 		{ 
 		///苹果
 					glTranslatef(2.0f, 0.0f, 0.0f); 
