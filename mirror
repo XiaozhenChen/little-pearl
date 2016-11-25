@@ -1,0 +1,76 @@
+void display(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	gluLookAt(camera_x, 0.0, camera_z, /* Eye pos XYZ */
+		camera_x+1.0f*sin(camera_rot), 0.0, camera_z-1.0f*cos(camera_rot), /* Target pos XYZ */
+		0.0, 1.0, 0.0); /* Up vector */
+
+	
+	box_xrot += 0.5f;
+	box_yrot += 0.5f;
+	if (PPAP)
+	{
+		alpha = alpha > 0 ? alpha - 0.1 : 0;
+		delta = 90.0;
+	}
+	else
+	{
+		alpha = 2.0;
+		delta += 1.0;
+	}
+
+	//code below this line
+	//code below this line
+
+
+	int i = 0;
+	
+	glStencilMask(0x00);
+	glDisable(GL_STENCIL_TEST);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glClearStencil(0);
+	glClear(GL_STENCIL_BUFFER_BIT);
+	for ( i = 0;i < 6;i++)
+	{
+		//i = 1;
+		int po = (int)pow(2, i);
+		//cout << po;
+		draw_mirror_without(i);
+
+		
+		glStencilFunc(GL_ALWAYS, i + 1, 0);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glStencilMask(0xff);
+		glEnable(GL_STENCIL_TEST);
+		draw_mirror_only(i);
+
+		glStencilMask(0);
+		glDisable(GL_STENCIL_TEST);
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
+	}
+
+	draw_mirror_only();
+	glEnable(GL_STENCIL_TEST);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	for (int i = 0;i < 6;i++)
+	{
+		draw_image(i);
+	}
+
+	//glStencilMask(0);
+	glDisable(GL_STENCIL_TEST);
+	//glClear(GL_DEPTH_BUFFER_BIT);
+	draw_PPAP(false);
+
+	
+
+	glutSwapBuffers();
+
+	
+}
